@@ -50,10 +50,11 @@ class DatabaseSeeder extends Seeder
             ->count(20)
             ->create();
 
+        /** @var UserImageService $imageService */
+        $imageService = resolve(UserImageService::class);
+
         foreach ($users as $user) {
-            /** @var UserImageService $service */
-            $service = resolve(UserImageService::class);
-            $service->getRandomUserImage($user);
+            $imageService->getRandomUserImage($user);
         }
     }
 }
