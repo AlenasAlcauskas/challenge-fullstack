@@ -32,7 +32,7 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/auth/login/google/callback',
+        'redirect' => env('GOOGLE_CLIENT_REDIRECT', 'http://localhost/auth/login/google/callback'),
     ]
 
 ];
