@@ -1,18 +1,23 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PictureController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::prefix('api')
+    ->middleware('auth:sanctum')
+    ->name('api')
+    ->group(function() {
+        Route::get('comments', [CommentController::class, 'show']);
+        Route::post('comment/add', [CommentController::class, 'create']);
+        Route::get('comment/{id}/replies', [CommentController::class, 'replies']);
+        Route::delete('comment/delete/{id}', [CommentController::class, 'delete']);
 
-Route::get('/', function () {
-    return view('welcome');
+        Route::get('picture/{filename}', [PictureController::class, 'get'])->name('.picture');
+});
+
+require __DIR__.'/auth.php';
+
+Route::fallback(function() {
+    return view('app');
 });
