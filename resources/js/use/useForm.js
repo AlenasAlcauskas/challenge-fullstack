@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {reactive} from "vue";
 
-
 export default function useForm(options) {
   const method = options.method || 'post';
 
@@ -20,10 +19,6 @@ export default function useForm(options) {
       }
 
       const data = form.data;
-
-      // {
-      //   data = form.data;
-      // }
 
       axios({url: options.url, method, data})
         .then((response) => {
