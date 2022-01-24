@@ -1,6 +1,7 @@
 <template>
     <div :id="parent ? parent : 'comments'" class="comment-cards">
-        <div class="comment-cards-container p-0 container shadow w-auto m-3 rounded-3 position-relative">
+        <div class="mt-3 comment-cards-container p-0 container shadow w-auto m-3 rounded-3 position-relative">
+            <a href="#" class="p-3 logout-link" @click="logOut"> Log out</a>
             <div class="p-3 d-flex flex-column gap-4 h-75">
                 <h3 class="p-3 text-h3-w400">
                     {{ comments?.length }}
@@ -31,7 +32,7 @@ import {ref, computed, watch} from "vue";
 import {useStore} from 'vuex'
 import AddComment from "../components/AddComment";
 import CommentCard from "../components/CommentCard";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
 export default {
     name: "Index",
@@ -39,6 +40,7 @@ export default {
     setup() {
         const store = useStore();
         const route = useRoute();
+        const router = useRouter();
         const user = store.getters.user
         const comments = ref([]);
         const parent = computed(() => route.params.parent)
@@ -65,6 +67,10 @@ export default {
             getComments(p)
         }
 
+        const logOut = () => {
+            store.dispatch('logout').then(() => router.push('/login'));
+        }
+
         getComments()
 
         return {
@@ -72,7 +78,8 @@ export default {
             comments,
             getComments,
             parent,
-            onChangeParent
+            onChangeParent,
+            logOut
         }
     }
 }
